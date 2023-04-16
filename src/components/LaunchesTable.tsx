@@ -197,7 +197,7 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
               }
             </tbody>
           </table>
-          { pagedList.length && !loading ? '' : <NoData /> }
+          { !pagedList.length && !loading ? <NoData /> : '' }
         </div>
         {
           totalPages > 1 ?
