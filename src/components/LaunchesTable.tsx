@@ -3,6 +3,7 @@ import moment from 'moment';
 import SortIcon from "./SortIcon";
 import Spinner from "./Spinner";
 import NoData from "./NoData";
+import ErrorAlert from "./ErrorAlert";
 import Pagination from 'rsuite/Pagination';
 import { useState, useEffect } from "react";
 import { isValidKey } from "@/lib/utils";
@@ -133,7 +134,9 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
 
   if (error) {
     console.error(error);
-    return null;
+    return (
+      <ErrorAlert />
+    )
   }
 
   const column = [

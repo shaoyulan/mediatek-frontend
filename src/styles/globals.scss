@@ -93,11 +93,12 @@ a {
   text-align: center;
 }
 
-// No Data
-.no-data{
+// No Data、Error Alert
+.no-data, .error-alert{
   text-align: center;
   font-size: 26px;
   font-weight: bold;
+  padding-top: 30px;
 }
 
 // spinner
