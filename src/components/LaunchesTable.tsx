@@ -197,6 +197,7 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
               }
             </tbody>
           </table>
+          <div className="record-info">Total Rows: {filteredList.length}</div>
           { !pagedList.length && !loading ? <NoData /> : '' }
         </div>
         {
