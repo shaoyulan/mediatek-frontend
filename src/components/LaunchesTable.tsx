@@ -126,10 +126,10 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
     }
   }, [data]);
 
+  return (
+    <Spinner />
+  )
   if (loading) {
-    return (
-      <Spinner />
-    )
   }
 
   if (error) {
