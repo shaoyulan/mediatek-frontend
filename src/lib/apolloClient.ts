@@ -1,4 +1,4 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
 
 const client = new ApolloClient({
   uri:'https://spacex-production.up.railway.app/',
@@ -13,6 +13,6 @@ const client = new ApolloClient({
     //   },
     // },
   })
-});
+})
 
-export default client;
+export default client

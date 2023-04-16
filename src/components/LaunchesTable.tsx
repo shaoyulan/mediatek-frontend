@@ -1,12 +1,12 @@
-import { useQuery, gql } from "@apollo/client";
-import moment from 'moment';
-import SortIcon from "./SortIcon";
-import Spinner from "./Spinner";
-import NoData from "./NoData";
-import ErrorAlert from "./ErrorAlert";
-import Pagination from 'rsuite/Pagination';
-import { useState, useEffect } from "react";
-import { isValidKey } from "@/lib/utils";
+import { useQuery, gql } from "@apollo/client"
+import moment from 'moment'
+import SortIcon from "./SortIcon"
+import Spinner from "./Spinner"
+import NoData from "./NoData"
+import ErrorAlert from "./ErrorAlert"
+import Pagination from 'rsuite/Pagination'
+import { useState, useEffect } from "react"
+import { isValidKey } from "@/lib/utils"
 
 type Props = {
   keyword: string;
@@ -37,7 +37,7 @@ type LaunchRecordFlat = {
 }
 
 export default function LaunchesTable({keyword = '', startDate = '', endDate = ''}: Props) {
-  const ITEMS_PER_PAGE: number = 20;
+  const ITEMS_PER_PAGE: number = 20
   const QUERY = gql`
     query Query {
       launches {
@@ -50,12 +50,12 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
         launch_date_local
       }
     }
-  `;
-  const { data, loading, error, fetchMore } = useQuery<PostData>(QUERY);
-  const [list, setList] = useState<LaunchRecordFlat[] | []>([]);
-  const [activeColumn, setActiveColumn] = useState("");
-  const [sortDirection, setSortDirection] = useState<SortDirection>("");
-  const [activePage, setActivePage] = useState(1);
+  `
+  const { data, loading, error, fetchMore } = useQuery<PostData>(QUERY)
+  const [list, setList] = useState<LaunchRecordFlat[] | []>([])
+  const [activeColumn, setActiveColumn] = useState("")
+  const [sortDirection, setSortDirection] = useState<SortDirection>("")
+  const [activePage, setActivePage] = useState(1)
 
   function processData(data:PostData){
     const source = data?.launches || []
@@ -67,25 +67,25 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
         rocket_type: item?.rocket?.rocket_type,
         launch_date_local: item?.launch_date_local,
       }
-    });
-    setList(processed);
+    })
+    setList(processed)
   }
 
   // 以字串比較排序
   function compareByString(a:string, b:string, direction:string): number{
-    let A = a.toUpperCase();
-    let B = b.toUpperCase();
+    let A = a.toUpperCase()
+    let B = b.toUpperCase()
 
     if (direction === "asc") {
-      return A.localeCompare(B);
+      return A.localeCompare(B)
     } else {
-      return B.localeCompare(A);
+      return B.localeCompare(A)
     }
   }
 
   // 以日期比較排序
   function compareByDate(a:string, b:string, direction:string): number{
-    const ascResult = new Date(a).getTime() - new Date(b).getTime();
+    const ascResult = new Date(a).getTime() - new Date(b).getTime()
 
     if (direction === "asc") {
       return ascResult
@@ -101,30 +101,30 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
       if ( isValidKey(column, a) ) {
 
         if ( column == 'launch_date_local' ) { 
-          return compareByDate(a[column], b[column], direction);
+          return compareByDate(a[column], b[column], direction)
         } 
         
-        return compareByString(a[column], b[column], direction);
+        return compareByString(a[column], b[column], direction)
       }
 
       return 0
-    });
-    setList(sortedData);
-    setActiveColumn(column);
-    setSortDirection(direction);
-    setActivePage(1);
+    })
+    setList(sortedData)
+    setActiveColumn(column)
+    setSortDirection(direction)
+    setActivePage(1)
   };
 
 
   useEffect(() => {
-    setActivePage(1);
-  }, [keyword, startDate, endDate]);
+    setActivePage(1)
+  }, [keyword, startDate, endDate])
 
   useEffect(() => {
     if ( data ){
-      processData(data);
+      processData(data)
     }
-  }, [data]);
+  }, [data])
 
   if (loading) {
     return (
@@ -133,7 +133,7 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
   }
 
   if (error) {
-    console.error(error);
+    console.error(error)
     return (
       <ErrorAlert />
     )
@@ -151,17 +151,17 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
       item.mission_name || '',
       item.rocket_name || '',
       item.rocket_type || '',
-    ].map(v=>v.toLowerCase()).join(' ');
+    ].map(v=>v.toLowerCase()).join(' ')
 
-    const keywordPass = text.includes(keyword.toLowerCase());
-    const startDatePass = startDate ? moment(item.launch_date_local).isSameOrAfter(moment(startDate), 'day') : true;
-    const endDatePass = endDate ? moment(item.launch_date_local).isSameOrBefore(moment(endDate), 'day') : true;
+    const keywordPass = text.includes(keyword.toLowerCase())
+    const startDatePass = startDate ? moment(item.launch_date_local).isSameOrAfter(moment(startDate), 'day') : true
+    const endDatePass = endDate ? moment(item.launch_date_local).isSameOrBefore(moment(endDate), 'day') : true
 
-    return keywordPass && startDatePass && endDatePass;
-  });
+    return keywordPass && startDatePass && endDatePass
+  })
 
-  const pagedList = filteredList.slice((activePage - 1) * ITEMS_PER_PAGE, activePage * ITEMS_PER_PAGE);
-  const totalPages = Math.ceil(filteredList.length / ITEMS_PER_PAGE);
+  const pagedList = filteredList.slice((activePage - 1) * ITEMS_PER_PAGE, activePage * ITEMS_PER_PAGE)
+  const totalPages = Math.ceil(filteredList.length / ITEMS_PER_PAGE)
 
   return (
     <>

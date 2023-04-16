@@ -1,39 +1,39 @@
-import { ApolloProvider } from "@apollo/client";
-import client from "@/lib/apolloClient";
-import LaunchesTable from "@/components/LaunchesTable";
-import DateRangePicker from 'rsuite/DateRangePicker';
-import 'rsuite/dist/rsuite.min.css';
-import { Input, InputGroup, Button, Container } from 'rsuite';
-import SearchIcon from '@rsuite/icons/Search';
-import { useState } from "react";
+import { ApolloProvider } from "@apollo/client"
+import client from "@/lib/apolloClient"
+import LaunchesTable from "@/components/LaunchesTable"
+import DateRangePicker from 'rsuite/DateRangePicker'
+import 'rsuite/dist/rsuite.min.css'
+import { Input, InputGroup, Button, Container } from 'rsuite'
+import SearchIcon from '@rsuite/icons/Search'
+import { useState } from "react"
 
 export default function Home() {
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState("")
 
   const styles = {
     width: 230,
     marginBottom: 10
-  };
+  }
 
-  const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
-  const [startDate, endDate] = dateRange ? dateRange : [null, null];
+  const [dateRange, setDateRange] = useState<[Date, Date] | null>(null)
+  const [startDate, endDate] = dateRange ? dateRange : [null, null]
 
   function handleSearch(value:string, event: React.ChangeEvent){
-    setKeyword(value);
+    setKeyword(value)
   };
 
   function onChange(dates: [Date, Date] | null){
-    setDateRange(dates);
+    setDateRange(dates)
   };
 
   function clearSearch(){
-    setKeyword("");
-    setDateRange(null);
+    setKeyword("")
+    setDateRange(null)
   }
 
   function formatDate(date: Date|null): string{
-    if ( !date ) return '';
-    return date.toISOString();
+    if ( !date ) return ''
+    return date.toISOString()
   }
 
   return (
@@ -41,7 +41,7 @@ export default function Home() {
       <Container>
         <div className="content">
           <h1 className="page-title">
-          SpaceX Launche Records
+          SpaceX Launch Records
           </h1>
           <div className="search-toolbar">
             <InputGroup style={styles}>
