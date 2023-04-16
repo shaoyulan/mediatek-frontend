@@ -187,10 +187,10 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
                 pagedList.map((item) => {
                   return (
                     <tr key={item.id} >
-                      <td>{item.mission_name}</td>
-                      <td>{item?.rocket_name}</td>
-                      <td>{item?.rocket_type}</td>
-                      <td>{moment(item.launch_date_local).format('YYYY/MM/DD')}</td>
+                      <td>{item.mission_name || ''}</td>
+                      <td>{item.rocket_name || ''}</td>
+                      <td>{item.rocket_type || ''}</td>
+                      <td>{item.launch_date_local ? moment(item.launch_date_local).format('YYYY/MM/DD') : ''}</td>
                     </tr>
                   )
                 })
