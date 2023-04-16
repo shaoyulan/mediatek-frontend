@@ -1,0 +1,217 @@
+@import '@/styles/mixins.scss';
+
+html:root {
+  --max-width: 1100px;
+  --border-radius: 12px;
+  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+
+  // custom variable
+  --theme-color: #f39a1e;
+  --theme-color-rgb: 243, 154, 30;
+  --table-border-color: #f2f2f5;
+  --table-bg-active-color: rgba(var(--theme-color-rgb), 0.15);
+  --search-toolbar-height: 60px;
+
+  // framework override
+  --rs-btn-ghost-border: var(--theme-color);
+  --rs-btn-ghost-text: var(--theme-color);
+  --rs-btn-ghost-hover-border: var(--theme-color);
+  --rs-btn-ghost-hover-text: var(--theme-color);
+  --rs-btn-ghost-active-border: var(--theme-color);
+  --rs-btn-ghost-active-text: var(--theme-color);
+  --rs-input-focus-border: var(--theme-color);
+  --rs-color-focus-ring: rgba(var(--theme-color-rgb), 0.1);
+  --rs-state-focus-shadow: 0 0 0 3px rgba(var(--theme-color-rgb),.1);
+  --rs-btn-link-text: var(--theme-color);
+  --rs-btn-link-active-text: var(--theme-color);
+  --rs-btn-link-hover-text: var(--theme-color);
+  --rs-btn-primary-bg: var(--theme-color);
+  --rs-btn-primary-hover-bg: var(--theme-color);
+  --rs-btn-primary-active-bg: var(--theme-color);
+  --rs-listbox-option-hover-bg:  rgba(var(--theme-color-rgb),.1);
+  --rs-listbox-option-hover-text: var(--theme-color);
+  --rs-calendar-range-bg: rgba(var(--theme-color-rgb),.1);
+  --rs-bg-active: var(--theme-color);
+  --rs-calendar-cell-selected-hover-bg: var(--theme-color);
+  --rs-text-active: var(--theme-color);
+  --rs-picker-value: var(--rs-text-primary);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+}
+
+html{
+  overflow-y: scroll;
+  @include scrollbar-style;
+}
+
+body {
+  line-height: 1.3;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+}
+
+// container
+.rs-container{
+  width: 1024px;
+  max-width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+// content
+.content{
+  padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+// page title
+.page-title{
+  margin-bottom: 15px;
+  font-size: 30px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+// No Data
+.no-data{
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+// spinner
+.base-spinner{
+  display: flex;
+  text-align: center;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+
+  .spinner {
+    animation: rotate 2s linear infinite;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .spinner .path{
+    stroke: var(--theme-color);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+  }
+  
+  
+  @keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
+  }
+}
+
+// search-toolbar
+.search-toolbar{
+  height: var(--search-toolbar-height);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 10px;
+  .rs-input-group, .rs-picker{
+    margin-right: 15px;
+  }
+}
+
+// date range picker
+.rs-calendar-month-dropdown-row-wrapper{
+  @include scrollbar-style;
+}
+
+// pagination
+.rs-pagination-group{
+  justify-content: center;
+}
+
+// table
+table{
+  border: 1px solid var(--table-border-color);
+  border-collapse: collapse;
+  line-height: 1.2;
+  td, th{
+    padding: 8px;
+    border: 1px solid var(--table-border-color);
+  }
+  th{
+    .svg-inline--fa{
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+  }
+  tbody{
+    tr{
+      &:hover{
+        background: var(--table-bg-active-color);
+      }
+    }
+  }
+}
+
+// launches table
+.launches-table-block{
+  display: flex;
+  flex-direction: column;
+}
+
+.launches-table-wrap{
+  flex-grow: 1;
+} 
+
+.launches-table{
+  width: 100%;
+  margin-bottom: 30px;
+  text-align: center;
+  th{
+    background: var(--theme-color);
+    color:#fff;
+    width: 25%;
+    position: sticky;
+    top: calc(var(--search-toolbar-height) - 1px);
+  }
+}
+
