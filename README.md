@@ -2,7 +2,7 @@
 
 ## Online Demo
 
-[SpaceX Launche Records](https://mediatek-frontend.vercel.app/)
+[SpaceX Launch Records](https://mediatek-frontend.vercel.app/)
 
 ## Run Locally
 
