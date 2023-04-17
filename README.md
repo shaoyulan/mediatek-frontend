@@ -1,4 +1,4 @@
-# SpaceX Launche Records
+# SpaceX Launch Records
 
 ## Online Demo
 
