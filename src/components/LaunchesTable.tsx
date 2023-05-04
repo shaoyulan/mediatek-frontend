@@ -15,7 +15,6 @@ type Props = {
   startDate: string;
   endDate: string;
   tableMeta: object;
-  children: React.ReactNode;
 }
 
 type LaunchRecord = {
@@ -40,7 +39,7 @@ type LaunchRecordFlat = {
   launch_date_local: string;
 }
 
-export default function LaunchesTable({keyword = '', startDate = '', endDate = '', tableMeta = {}, children}: Props) {
+export default function LaunchesTable({keyword = '', startDate = '', endDate = '', tableMeta = {}}: Props) {
   const ITEMS_PER_PAGE: number = 20
   const QUERY = gql`
     query Query {

@@ -1,5 +1,9 @@
 import { createContext } from 'react'
 
-export const TableMetaContext = createContext({
+type context = {
+  targetReaders?: string[];
+}
+
+export const TableMetaContext = createContext<context>({
   targetReaders: ['John Doe']
 })
