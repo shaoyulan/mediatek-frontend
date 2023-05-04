@@ -64,6 +64,7 @@ export default function Home() {
               keyword={keyword} 
               startDate={formatDate(startDate)} 
               endDate={formatDate(endDate)}
+              tableMeta={{ targetReaders: ['Elon Musk']}}
             />
         </div>
       </Container>

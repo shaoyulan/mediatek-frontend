@@ -7,11 +7,15 @@ import ErrorAlert from "./ErrorAlert"
 import Pagination from 'rsuite/Pagination'
 import { useState, useEffect } from "react"
 import { isValidKey } from "@/lib/utils"
+import { useContext } from "react"
+import { TableMetaContext } from "@/context/TableMetaContext"
 
 type Props = {
   keyword: string;
   startDate: string;
   endDate: string;
+  tableMeta: object;
+  children: React.ReactNode;
 }
 
 type LaunchRecord = {
@@ -36,7 +40,7 @@ type LaunchRecordFlat = {
   launch_date_local: string;
 }
 
-export default function LaunchesTable({keyword = '', startDate = '', endDate = ''}: Props) {
+export default function LaunchesTable({keyword = '', startDate = '', endDate = '', tableMeta = {}, children}: Props) {
   const ITEMS_PER_PAGE: number = 20
   const QUERY = gql`
     query Query {
@@ -165,56 +169,58 @@ export default function LaunchesTable({keyword = '', startDate = '', endDate = '
 
   return (
     <>
-      <div className="launches-table-block">
-        <div className="launches-table-wrap">
-          <table className="launches-table">
-            <thead>
-              <tr>
+      <TableMetaContext.Provider value={tableMeta}>
+        <div className="launches-table-block">
+          <div className="launches-table-wrap">
+            <table className="launches-table">
+              <thead>
+                <tr>
+                  {
+                    column.map((item) => {
+                      return (
+                        <th key={item.name} onClick={() => handleSort(item.name)}>
+                          {item.label}
+                          {activeColumn === item.name ? <SortIcon sort={sortDirection}/> : ""}
+                        </th>
+                      )
+                    })
+                  }
+                </tr>
+              </thead>
+              <tbody>
                 {
-                  column.map((item) => {
+                  pagedList.map((item) => {
                     return (
-                      <th key={item.name} onClick={() => handleSort(item.name)}>
-                        {item.label}
-                        {activeColumn === item.name ? <SortIcon sort={sortDirection}/> : ""}
-                      </th>
+                      <tr key={item.id} >
+                        <td>{item.mission_name || ''}</td>
+                        <td>{item.rocket_name || ''}</td>
+                        <td>{item.rocket_type || ''}</td>
+                        <td>{item.launch_date_local ? moment(item.launch_date_local).format('YYYY/MM/DD') : ''}</td>
+                      </tr>
                     )
                   })
                 }
-              </tr>
-            </thead>
-            <tbody>
-              {
-                pagedList.map((item) => {
-                  return (
-                    <tr key={item.id} >
-                      <td>{item.mission_name || ''}</td>
-                      <td>{item.rocket_name || ''}</td>
-                      <td>{item.rocket_type || ''}</td>
-                      <td>{item.launch_date_local ? moment(item.launch_date_local).format('YYYY/MM/DD') : ''}</td>
-                    </tr>
-                  )
-                })
-              }
-            </tbody>
-          </table>
-          <div className="record-info">Total Rows: {filteredList.length}</div>
-          { !pagedList.length && !loading ? <NoData /> : '' }
+              </tbody>
+            </table>
+            <div className="record-info">Total Rows: {filteredList.length}</div>
+            { !pagedList.length && !loading ? <NoData /> : '' }
+          </div>
+          {
+            totalPages > 1 ?
+              <Pagination
+                prev
+                last
+                next
+                first
+                size="md"
+                total={filteredList.length}
+                limit={ITEMS_PER_PAGE}
+                activePage={activePage}
+                onChangePage={setActivePage}
+              /> : ''
+          }
         </div>
-        {
-          totalPages > 1 ?
-            <Pagination
-              prev
-              last
-              next
-              first
-              size="md"
-              total={filteredList.length}
-              limit={ITEMS_PER_PAGE}
-              activePage={activePage}
-              onChangePage={setActivePage}
-            /> : ''
-        }
-      </div>
+      </TableMetaContext.Provider>
     </>
   )
 }
